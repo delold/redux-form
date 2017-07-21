@@ -455,7 +455,7 @@ const createReducer = structure => {
             plainDeleteInWithCleanUp(
               getIn(result, 'syncErrors'),
               name
-            )
+            ) || empty,
           ),
           'syncErrors'
         )
