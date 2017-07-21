@@ -56,6 +56,7 @@ const createReducer = structure => {
     splice
   } = structure
   const deleteInWithCleanUp = createDeleteInWithCleanUp(structure)
+  const plainDeleteInWithCleanUp = createDeleteInWithCleanUp(plain)
   const doSplice = (state, key, field, index, removeNum, value, force) => {
     const existing = getIn(state, `${key}.${field}`)
     return existing || force
@@ -449,7 +450,15 @@ const createReducer = structure => {
         result = setIn(result, key, field)
       }
       if (destroyOnUnmount) {
-        result = deleteInWithCleanUp(result, `syncErrors.${name}`)
+        result = deleteInWithCleanUp(
+          setIn(result, 'syncErrors',
+            plainDeleteInWithCleanUp(
+              getIn(result, 'syncErrors'),
+              name
+            )
+          ),
+          'syncErrors'
+        )
         result = deleteInWithCleanUp(result, `submitErrors.${name}`)
         result = deleteInWithCleanUp(result, `asyncErrors.${name}`)
         result = deleteInWithCleanUp(result, `syncWarnings.${name}`)
