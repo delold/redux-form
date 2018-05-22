@@ -3580,6 +3580,7 @@ const describeReduxForm = (name, structure, combineReducers, expect) => {
       expect(onChange.calls[0].arguments[0]).toEqualMap({ foo: 'dog' })
       expect(onChange.calls[0].arguments[1]).toBeA('function')
       expect(onChange.calls[0].arguments[2].values).toEqualMap({ foo: 'dog' })
+      expect(onChange.calls[0].arguments[3]).toEqualMap({})
 
       changeBar('cat')
 
@@ -3592,6 +3593,9 @@ const describeReduxForm = (name, structure, combineReducers, expect) => {
       expect(onChange.calls[1].arguments[2].values).toEqualMap({
         foo: 'dog',
         bar: 'cat'
+      })
+      expect(onChange.calls[1].arguments[3]).toEqualMap({
+        foo: 'dog'
       })
 
       changeFoo('dog')
@@ -3608,6 +3612,10 @@ const describeReduxForm = (name, structure, combineReducers, expect) => {
       expect(onChange.calls[2].arguments[1]).toBeA('function')
       expect(onChange.calls[2].arguments[2].values).toEqualMap({
         foo: 'doggy',
+        bar: 'cat'
+      })
+      expect(onChange.calls[2].arguments[3]).toEqualMap({
+        foo: 'dog',
         bar: 'cat'
       })
     })
